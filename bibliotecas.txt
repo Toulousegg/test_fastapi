@@ -1,0 +1,14 @@
+#pip install fastapi uvicorn sqlalchemy passlib[bcrypt] python-jose[cryptography] python-dotenv python-multipart (poner esto en el terminal para descargar todo lo necesario para nuestro programa)
+# .................. uvicorn (es una asgi server, basicamente en un gerenciador de nuestro servidor cuando otros usuarios quieren entrar al mismo tiempo, basicamente el cuida para que no explote
+# ...........................sqlalchemy (para poder crear la db, vamos a poner el modelo y el lo va a traducir a codigo sql)
+# ......................................passlib [bcrypt] (el passlib predeterminado es una biblioteca para manipular contrasenas, y con el bcrypt lo que pasa es que las contrasenas son criptrografadas
+# .......................................perfecto para evitar ataques o si alguien invade nuestra web no puedo ver las contrasenas
+# ......................................................python-jose[cryptography] (sirve para autenticar un usuario usando JWT, basicamente (por lo que entendi) el crea un token que tiene 
+# ......................................................fecha de vencimiento y garante que no es otra persona, resumidamente es como un papelito que tiene una firma que dice 'este usuario es valido y ya hizo login'
+# ......................................................viaja en el header Authorization, no se guarda en el servidor, tiene fecha de vencimiento, no se puede falsificar (gracias a cryptography)
+# ......................................................el python-jose tiene que ser obligatoriamente descargado con [cryptography], porque si no es mmuy debil y facil de manipular
+# ................................................................................python-dotevn (es para gerenciar nuestros archivos de variables de ambientes, que sirve para NO colocar claves
+# ................................................................................ por accidente en el codigo, no permite llaves , ni tokens, ni claves ni nada asi, es seguridad contra nuestra
+# ................................................................................humanidad
+# ..............................................................................................python-multipart se supone que se deberia descargar junto con python-jose pero para garantizar que
+# ..............................................................................................este descargado lo descargamos manualmente, es una dependencia de python-jose
