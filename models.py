@@ -66,3 +66,8 @@ class Items(base):
 
 #ejecutar la creacion de la tabla (crear las tablas en la base de datos)
 base.metadata.create_all(bind=db) #esto CREA la base de datos, sin este codigo no se te sube nada, el "bind={la variable que guarda la conexion a la db}"
+
+
+#para subir los cambios que hacemos a nuestra base de datos, tenemos que usar el comando "alembic revision --autogenerate -m '{mensaje de los cambios, es tipo un commit}'"
+#ahi, el creara un archivo con la nueva version y te mostrara los cambios, para poder implementar, osea, confirmar eses cambios usas el comando "alembic upgrade head"
+#ahi todo cambia, si quieres eliminar o agregar una nueva columna a tu db es solo borrarla o escribirla en este archivo y usar esos dos comandos
