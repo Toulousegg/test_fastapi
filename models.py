@@ -1,11 +1,15 @@
 from sqlalchemy import create_engine,Column, Integer, String, ForeignKey #estoy importando los tipos de datos que voy a usar en la base de datos porque sqlalchemy necesita saber que tipo de datos va a manejar
 from sqlalchemy.orm import declarative_base
 import sqlalchemy_utils #ese sqlalchemy_utils es un extra de sqlalchemy que nos da herramientas extras a nuestro proyecto, son cosas utiles (no lo voy a usar pero se entiende)
+#si queremos hacer una nueva funcion y necesitamos por ejemplo el nombre del usuario tenemos que hacer una migracion de la db, para eso usamos la biblioteca alembic, para iniciarla
+#escribimos en cmd "alembic init alembic" para crear un directorio alembic para poder usarlo, ahi va a crear dos cosas, una carpeta con el nombre alembic y un archivo .ini
+#para usarlo tenemos que poner nuestra direccion de db y pegarla en el archivo .ini y en el env.py dentro de la carpeta alembic necesitas 
+
 
 #crear la conexion a la base de datos
 db = create_engine('postgresql://postgres:123correof@localhost/cursofastapi') #aqui estoy creando la conexion a la base de datos usando postgresql, con el usuario postgres, la contrasena 123correof y la base de datos cursofastapi
 
-#creando la base de datos
+#creando la base de la base de datos
 base = declarative_base() #aqui le estoy diciendo a sqlalchemy que lo que le voy a pasar ahora que lo guarde, lo entienda, entienda las palabras clave, que guarde metadata, que guarde un registro interno y todo eso 
 #necesito esto para ponerlo en el parametro del nombre de nuestra db para que el sqlalchemy sepa que hacer con toda esa info
 
