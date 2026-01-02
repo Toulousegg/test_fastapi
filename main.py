@@ -1,6 +1,14 @@
 from fastapi import FastAPI
+from passlib.context import CryptContext #este modulo es para criptografar las contraseñas
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 app=FastAPI()
+
+bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 from auth_route import auth_router #esto es MUY IMPORTANTE, porque si tu importas un archivo al main se crea un circulo en que nada se inicia porque el main necesita el otro para funcionar y el otro necesita del main para funcionar, entonces SIEMPRE importar archivos despues de crear la aplicacion como esta escrito arriba#
 from orders_route import orders_router
