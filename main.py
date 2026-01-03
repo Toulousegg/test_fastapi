@@ -1,14 +1,42 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Form
 from passlib.context import CryptContext #este modulo es para criptografar las contraseñas
 from dotenv import load_dotenv
 import os
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 
 load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 app=FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
+
+@app.get("/")
+def home(request: Request, ruta: str=""):
+    if ruta:
+        return RedirectResponse(f"/{ruta}", status_code=303)
+
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "name": ""}
+    )
+
+@app.post("/")
+def home_post(
+    request: Request,
+    nombre: str = Form(...)
+):
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "name": nombre}
+    )
+
+
 
 from auth_route import auth_router #esto es MUY IMPORTANTE, porque si tu importas un archivo al main se crea un circulo en que nada se inicia porque el main necesita el otro para funcionar y el otro necesita del main para funcionar, entonces SIEMPRE importar archivos despues de crear la aplicacion como esta escrito arriba#
 from orders_route import orders_router

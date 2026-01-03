@@ -27,10 +27,11 @@ class User(base): #aqui estoy creando la clase user que va a representar la tabl
     full_name = Column('full_name', String)
     senha = Column('hashed_password', String, nullable=False)
 
-    def __init__(self, username, email, senha): #esto sirve basicamente para darle un valor a nuestros datos (u objetos) de la base de datos, aqui vamos a decirle los parametros que ellos van a tener, donde self se refiere automaticamente a lo que esta escrito despues de Class (en este caso, user), y le da valores utilizables a ese user#
+    def __init__(self, username, email, senha, fullname): #esto sirve basicamente para darle un valor a nuestros datos (u objetos) de la base de datos, aqui vamos a decirle los parametros que ellos van a tener, donde self se refiere automaticamente a lo que esta escrito despues de Class (en este caso, user), y le da valores utilizables a ese user#
         self.username = username #aqui le digo "el parametro username dentro de self (user) es igual al username informado arriba", se que suena medio obvio pero lo entiendes mejor porque eres idiota
         self.email = email
         self.senha = senha
+        self.full_name = fullname
 
 #crear la tabla de pedidos
 class Order(base): #ese nombre despues de class es el nombre con el cual voy a poder interactuar con esa db en mi codigo python, este es el nombre de la variable por asi decirlo
