@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Request, Form
-from passlib.context import CryptContext #este modulo es para criptografar las contraseñas
 from dotenv import load_dotenv
 import os
 from fastapi.templating import Jinja2Templates
@@ -13,8 +12,6 @@ app=FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
-
-bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 @app.get("/")
 def home(request: Request, ruta: str=""):

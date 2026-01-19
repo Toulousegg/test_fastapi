@@ -4,12 +4,23 @@ from models import User
 #from sqlalchemy.orm import sessionmaker #esto es importante porque para poder hacer cualquier cosa en la db tenemos que abrir y cerrar sesion en la db 
 #porque si abrimos una sesion, hacemos la cambios pero no cerramos la sesion se hace una fila enorme de sesiones y un dia no podremos hacer mas nada de tantas sesiones abiertas
 from dependencias import CrearSession
-from main import bcrypt_context
+from passlib.context import CryptContext #este modulo es para criptografar las contraseñas
 from schemas import UserSchema, loginschema
+
+bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 def createToken(id_usuario):
     token = f"jhsed8wdi0j{id_usuario}"
     return token
+
+def authuser(senha, email, session):
+    usuario = session.query(User).filter(User.email==email).first()
+    if not usuario:
+        return False
+    elif not bcrypt_context.verify(senha, usuario.senha): #FRANKLIN RECUERDA QUE NO NECESITAS BUSCAR EN LA PUTA DB DIRECTAMENTE, USA LA VARIABLE USUARIO QUE ACABAS DE CREAR, PENDEJO
+        return False
+
+    return usuario
 
 auth_router = APIRouter(prefix='/auth', tags=['auth']) #este prefix que pasamos es un prefixo que indica que el www.%.com/{prefix}/... SIEMPRE va a ser igual, solo despues de el prefix que va a cambiar
 
@@ -54,15 +65,15 @@ async def create_conta(usuario_schema: UserSchema, session = Depends(CrearSessio
 
 @auth_router.post("/login")
 async def login(Loginschema: loginschema, session = Depends(CrearSession)):
-    usuario = session.query(User).filter(User.email== Loginschema.email).first()
+    usuario = authuser(Loginschema.password, Loginschema.email, session)
 
     if not usuario:
         raise HTTPException(status_code=400, detail="usuario no existe perro mamon")
     
     else:
         #gerar token
-        access_token = createToken
-        print(access_token)
+        access_token = createToken(usuario.id)
+        print(usuario.id, type(usuario.id))
         return {
             "access_token": access_token,
             "token_type":  "Bearer"          
