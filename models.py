@@ -35,33 +35,27 @@ class User(base): #aqui estoy creando la clase user que va a representar la tabl
 
 #crear la tabla de pedidos
 class Order(base): #ese nombre despues de class es el nombre con el cual voy a poder interactuar con esa db en mi codigo python, este es el nombre de la variable por asi decirlo
-    __tablename__ = 'orders' 
+    __tablename__ = 'orders'
 
     id = Column('id', Integer, primary_key=True, index=True) 
     title = Column('title', String, index=True)
     description = Column('description', String, index=True)
-    owner_id = Column('owner_id', Integer, ForeignKey('users.id')) #aqui estoy definiendo la relacion entre la tabla de pedidos y la tabla de usuarios, diciendo que el owner_id es una clave foranea que hace referencia al id de la tabla de usuarios
-    buyer_id = Column('buyer_id', Integer, ForeignKey('users.id')) #aqui digo quien es el comprador, un comprador puede tener varios productos y un producto varios compradores
     items_id = Column('items_id', Integer, ForeignKey('items.id')) #aqui quiero que las ordenes puedan tener muchos productos, donde varios compradores puedan tener ese producto
     price = Column('price', Integer, index=True)
 
-    def __init__(self, title, description, owner_id, buyer_id, price):
+    def __init__(self, title, description):
         self.title = title
         self.description = description
-        self.owner_id = owner_id
-        self.buyer_id = buyer_id
 
 class Items(base):
     __tablename__= 'items'
 
     id = Column('id', Integer, primary_key=True, index=True)
     nomeitem = Column('nomeitem', String, index=True)
-    owner_id = Column('owner_id', Integer, ForeignKey('users.id')) #un item con un solo creador o dueno
     price = Column('price', Integer, index=True)
 
     def __init__(self, nomeitem, owner_id, price):
         self.nomeitem = nomeitem
-        self.owner_id = owner_id
         self.price = price
 
 #ejecutar la creacion de la tabla (crear las tablas en la base de datos)

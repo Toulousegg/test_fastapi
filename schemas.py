@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import Optional
 
 class UserSchema(BaseModel):
     username: str
@@ -9,3 +8,17 @@ class UserSchema(BaseModel):
 
     class Config:
         from_attributes = True 
+
+class orderschema(BaseModel):
+    title: str
+    description: str
+
+    class Config:
+        from_attributes = True
+
+class loginschema(BaseModel):
+    email: str
+    password: str
+
+    class Config:
+        from_attribuites = True
